@@ -115,17 +115,7 @@ int main(int argc, char* args[]) {
     }
 
     // Once all forks are done, the parent process waits for all its children to finish
-
-    /// !!!!!!!!!!!!!!!!!!!!!!!!! BUGGED !!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // Sometimes the parent process finishes before its children do, no clue why
-    // Actually, I'm not even sure if that is what's happening
-    // The terminal sometimes just enables user input again, and prints some child-process output slightly later
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    pid_t childpid;
-    while((childpid = waitpid(-1, NULL, WNOHANG))) {
-        if((childpid == -1) && (errno != EINTR))
-            break;
-    }
+    while(wait(NULL) != -1) {}
 
 	return EXIT_SUCCESS;
 }
